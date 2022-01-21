@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Comment box</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+  <style type="text/css">
+    input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=text-area], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+
+input[type=button] {
+  width: 100%;
+  background-color: orange;
+  color: black;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 30px;
+}
+
+input[type=button]:hover {
+  background-color: green;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+#demo{
+  height: 100px;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+}
+  </style>
+</head>
+<body>
+	<center><h2>Comment box</h2></center>
+<div>
+  <form>
+    <label for="fname">First Name</label>
+    <input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+    <label for="comment">Comment</label>
+    <input type="text-area" id="comment" name="lastname" placeholder="Type you comment please">
+
+     <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="australia">Australia</option>
+      <option value="canada">Canada</option>
+      <option value="usa">USA</option>
+    </select> 
+  
+    <input type="button" id="btn"  value="Comment">
+    <input type="button" id="btn2" value="Remove">
+
+  </form>
+</div>
+<center><h2>Till Now Comment on the post</h2></center>
+<div id="demo">
+	
+</div>
+<!--  -->
+<script type="text/javascript">
+  let comments = [];
+        // example {id:1592304983049, title: 'Deadpool', year: 2015}
+        const addMovie = (ev)=>{
+            ev.preventDefault();  //to stop the form submitting
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            let movie = {
+                id: time,
+                title: document.getElementById('fname').value,
+                comment: document.getElementById('comment').value,
+                location:document.getElementById('country').value
+            }
+            comments.push(movie);
+            document.forms[0].reset(); // to clear the form for the next entries
+            //document.querySelector('form').reset();
+
+            //for display purposes only
+            console.warn('added' , {comments} );
+            let pre = document.querySelector('#demo');
+            pre.textContent = '\n' + JSON.stringify(comments, '\t', 2);
+
+            //saving to localStorage
+            localStorage.setItem('Mycomments', JSON.stringify(comments) );
+        }
+        document.addEventListener('DOMContentLoaded', ()=>{
+            document.getElementById('btn').addEventListener('click', addMovie);
+        });
+        const remove=(ev)=>{
+            ev.preventDefault();
+            comments.pop();
+            alert("Last Item is going to be removed");
+            let pre = document.querySelector('#demo');
+            pre.textContent = '\n' + JSON.stringify(comments, '\t', 1);
+
+            //saving to localStorage
+            localStorage.setItem('Mycomments', JSON.stringify(comments) );
+
+
+        }
+        document.addEventListener('DOMContentLoaded', ()=>{
+            document.getElementById('btn2').addEventListener('click', remove);
+        });
+</script>
+<script type="text/javascript" src="index1.js"></script>
+<!-- </div> -->
+</body>
+</html>
